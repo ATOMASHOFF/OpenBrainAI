@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>OpenBrainAI Settings</title>
+<style>
+  :root {
+    color-scheme: dark;
+  }
+  body {
+    margin: 0;
+    width: 300px;
+    background: #17171b;
+    color: #f2f2f5;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  .wrap {
+    padding: 18px;
+  }
+  h1 {
+    margin: 0 0 4px;
+    font-size: 15px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  h1 .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: linear-gradient(150deg, #7c6cf0, #4b3fc4);
+    display: inline-block;
+  }
+  .sub {
+    margin: 0 0 16px;
+    font-size: 12.5px;
+    color: #a9a9b8;
+    line-height: 1.4;
+  }
+  label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: #c7c7d1;
+    margin-bottom: 6px;
+  }
+  input[type="password"] {
+    width: 100%;
+    box-sizing: border-box;
+    background: #101014;
+    border: 1px solid #34343d;
+    border-radius: 8px;
+    padding: 9px 10px;
+    color: #f2f2f5;
+    font-size: 13px;
+    font-family: inherit;
+    outline: none;
+  }
+  input[type="password"]:focus {
+    border-color: #a89bff;
+  }
+  button {
+    margin-top: 12px;
+    width: 100%;
+    background: #6c5ce7;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 9px 10px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  button:hover,
+  button:focus-visible {
+    background: #5b4bd6;
+  }
+  .status {
+    min-height: 16px;
+    margin: 10px 0 0;
+    font-size: 12.5px;
+    color: #8fd19e;
+  }
+  .status.error {
+    color: #ff9b9b;
+  }
+  .hint {
+    margin: 4px 0 0;
+    font-size: 11px;
+    line-height: 1.4;
+    color: #6f6f7c;
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <h1><span class="dot"></span>OpenBrainAI</h1>
+    <p class="sub">Paste your Anthropic API key to enable the assistant on every page.</p>
+
+    <label for="apiKey">Anthropic API key</label>
+    <input id="apiKey" type="password" placeholder="sk-ant-..." autocomplete="off" spellcheck="false" />
+    <button id="saveBtn" type="button">Save</button>
+    <p id="status" class="status" aria-live="polite"></p>
+    <p class="hint">Stored locally in this browser (chrome.storage.local) and sent only to api.anthropic.com.</p>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>

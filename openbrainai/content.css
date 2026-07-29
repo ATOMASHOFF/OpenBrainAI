@@ -1,0 +1,327 @@
+/* ==========================================================================
+   OpenBrainAI — content.css
+   Styles for everything content.js injects: the floating bubble, the
+   option panel, the region-select overlay, the region prompt input, and
+   the answer card.
+
+   The reset block below uses :where() on purpose. :where() always carries
+   ZERO specificity, so even though it resets every property to a clean
+   baseline (protecting our UI from the host page's CSS), every other rule
+   in this file — down to a plain class selector — still wins over it.
+   A normal "#id *" reset would NOT have this property (an ID selector
+   outranks a class selector), which silently cancels out component
+   styles further down the file.
+   ========================================================================== */
+
+:where(#obai-bubble, #obai-panel, #obai-answer-panel, #obai-region-overlay, #obai-region-prompt),
+:where(#obai-bubble, #obai-panel, #obai-answer-panel, #obai-region-overlay, #obai-region-prompt) * {
+  all: initial;
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #f2f2f5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- Bubble ---------- */
+
+#obai-bubble {
+  position: fixed;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(150deg, #7c6cf0, #4b3fc4);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(255, 255, 255, 0.08) inset;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: grab;
+  z-index: 2147483647;
+  opacity: 0;
+  transform: scale(0.85);
+  transition: opacity 0.18s ease, transform 0.18s ease, box-shadow 0.15s ease;
+  touch-action: none;
+}
+
+#obai-bubble.obai-ready {
+  opacity: 1;
+  transform: scale(1);
+}
+
+#obai-bubble:hover {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.12) inset;
+}
+
+#obai-bubble.obai-dragging {
+  cursor: grabbing;
+  transition: box-shadow 0.15s ease;
+}
+
+#obai-bubble:focus-visible {
+  outline: 2px solid #a89bff;
+  outline-offset: 3px;
+}
+
+#obai-bubble svg {
+  width: 22px;
+  height: 22px;
+  display: block;
+  pointer-events: none;
+}
+
+/* ---------- Shared floating-card look (option panel + answer card) ---------- */
+
+#obai-panel,
+#obai-answer-panel {
+  position: fixed;
+  width: 260px;
+  background: #1c1c22;
+  border-radius: 14px;
+  box-shadow: 0 10px 34px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.06) inset;
+  z-index: 2147483647;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.14s ease, transform 0.14s ease;
+  pointer-events: none;
+}
+
+#obai-panel.obai-open,
+#obai-answer-panel.obai-open {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* ---------- Option panel ---------- */
+
+#obai-panel {
+  padding: 8px;
+}
+
+.obai-option-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 9px;
+  cursor: pointer;
+  background: transparent;
+  text-align: left;
+  font-size: 13.5px;
+}
+
+.obai-option-btn:hover,
+.obai-option-btn:focus-visible {
+  background: #2a2a33;
+}
+
+.obai-option-btn:focus-visible {
+  outline: 2px solid #a89bff;
+  outline-offset: -2px;
+}
+
+.obai-option-btn svg {
+  width: 18px;
+  height: 18px;
+  flex: none;
+  opacity: 0.9;
+  display: block;
+}
+
+.obai-option-btn + .obai-option-btn {
+  margin-top: 2px;
+}
+
+/* ---------- Answer card ---------- */
+
+#obai-answer-panel {
+  width: 320px;
+  padding: 14px 14px 12px;
+}
+
+.obai-answer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.obai-answer-title {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: #a9a9b8;
+}
+
+.obai-close-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  cursor: pointer;
+  color: #a9a9b8;
+  font-size: 15px;
+  line-height: 1;
+}
+
+.obai-close-btn:hover,
+.obai-close-btn:focus-visible {
+  background: #2a2a33;
+  color: #f2f2f5;
+}
+
+.obai-close-btn:focus-visible {
+  outline: 2px solid #a89bff;
+}
+
+.obai-answer-body {
+  display: block;
+  max-height: 280px;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  font-size: 13.5px;
+  color: #ececf1;
+}
+
+.obai-answer-body::-webkit-scrollbar {
+  width: 8px;
+}
+
+.obai-answer-body::-webkit-scrollbar-thumb {
+  background: #38383f;
+  border-radius: 4px;
+}
+
+.obai-state-row {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: #c7c7d1;
+  font-size: 13.5px;
+}
+
+.obai-spinner {
+  display: block;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-top-color: #a89bff;
+  animation: obai-spin 0.7s linear infinite;
+  flex: none;
+}
+
+@keyframes obai-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.obai-error-text {
+  display: block;
+  color: #ff9b9b;
+  font-size: 13.5px;
+}
+
+/* ---------- Region-select overlay ---------- */
+
+#obai-region-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 10, 14, 0.28);
+  cursor: crosshair;
+  z-index: 2147483647;
+  touch-action: none;
+}
+
+.obai-selection-box {
+  position: fixed;
+  border: 1.5px dashed #a89bff;
+  background: rgba(124, 108, 240, 0.18);
+  pointer-events: none;
+}
+
+/* ---------- Region prompt (shown after a region is selected) ---------- */
+
+#obai-region-prompt {
+  position: fixed;
+  width: 300px;
+  background: #1c1c22;
+  border-radius: 14px;
+  box-shadow: 0 10px 34px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.06) inset;
+  z-index: 2147483647;
+  padding: 12px;
+}
+
+.obai-region-input-row {
+  display: flex;
+  gap: 8px;
+}
+
+#obai-region-input {
+  all: revert;
+  flex: 1;
+  min-width: 0;
+  background: #101014;
+  border: 1px solid #34343d;
+  border-radius: 8px;
+  padding: 8px 10px;
+  color: #f2f2f5;
+  font-size: 13.5px;
+  font-family: inherit;
+}
+
+#obai-region-input:focus-visible {
+  outline: none;
+  border-color: #a89bff;
+}
+
+.obai-region-hint {
+  display: block;
+  font-size: 11.5px;
+  color: #8f8f9c;
+  margin-top: 6px;
+}
+
+.obai-ask-btn {
+  all: revert;
+  background: #6c5ce7;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 0 14px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.obai-ask-btn:hover,
+.obai-ask-btn:focus-visible {
+  background: #5b4bd6;
+}
+
+.obai-ask-btn:focus-visible {
+  outline: 2px solid #a89bff;
+  outline-offset: 2px;
+}
+
+/* ---------- Reduced motion ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  #obai-bubble,
+  #obai-panel,
+  #obai-answer-panel {
+    transition: none;
+  }
+  .obai-spinner {
+    animation-duration: 1.4s;
+  }
+}
