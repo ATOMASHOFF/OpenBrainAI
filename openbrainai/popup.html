@@ -6,104 +6,183 @@
 <style>
   :root {
     color-scheme: dark;
+    --bg: #101722;
+    --surface: #182235;
+    --border: #2a3a55;
+    --text: #edf3ff;
+    --text-dim: #99abc8;
+    --accent: #ff8f6b;
+    --focus: #ffd5c7;
   }
   body {
     margin: 0;
-    width: 300px;
-    background: #17171b;
-    color: #f2f2f5;
+    width: 330px;
+    background: var(--bg);
+    color: var(--text);
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   }
   .wrap {
-    padding: 18px;
+    padding: 16px;
   }
   h1 {
     margin: 0 0 4px;
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 700;
     display: flex;
     align-items: center;
     gap: 8px;
   }
-  h1 .dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: linear-gradient(150deg, #7c6cf0, #4b3fc4);
-    display: inline-block;
+  .mark {
+    width: 16px;
+    height: 16px;
+    flex: none;
   }
   .sub {
-    margin: 0 0 16px;
+    margin: 0 0 14px;
     font-size: 12.5px;
-    color: #a9a9b8;
-    line-height: 1.4;
+    color: var(--text-dim);
+    line-height: 1.42;
   }
-  label {
+  .card {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--surface);
+    padding: 12px;
+  }
+  .label {
     display: block;
     font-size: 12px;
     font-weight: 600;
-    color: #c7c7d1;
     margin-bottom: 6px;
+    color: #d8e6ff;
   }
   input[type="password"] {
     width: 100%;
     box-sizing: border-box;
-    background: #101014;
-    border: 1px solid #34343d;
+    background: #0f1728;
+    border: 1px solid #3a4d6e;
     border-radius: 8px;
     padding: 9px 10px;
-    color: #f2f2f5;
+    color: var(--text);
     font-size: 13px;
     font-family: inherit;
     outline: none;
   }
-  input[type="password"]:focus {
-    border-color: #a89bff;
+  input[type="password"]:focus-visible,
+  button:focus-visible,
+  .change-btn:focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 2px;
+  }
+  .button-row {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
   }
   button {
-    margin-top: 12px;
-    width: 100%;
-    background: #6c5ce7;
-    color: #fff;
     border: none;
     border-radius: 8px;
-    padding: 9px 10px;
+    padding: 9px 12px;
     font-size: 13px;
     font-weight: 600;
     cursor: pointer;
     font-family: inherit;
   }
-  button:hover,
-  button:focus-visible {
-    background: #5b4bd6;
+  .save-btn {
+    background: var(--accent);
+    color: #182235;
+    min-width: 88px;
+  }
+  .save-btn:hover,
+  .save-btn:focus-visible {
+    background: #ff9f7f;
+  }
+  .change-btn {
+    background: transparent;
+    border: 1px solid rgba(255, 143, 107, 0.34);
+    color: #ffdacc;
+    padding: 8px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  .saved-key {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-size: 12.5px;
+    color: #d8e6ff;
+    background: #0f1728;
+    border: 1px solid #334866;
+    border-radius: 8px;
+    padding: 8px 10px;
+    display: block;
   }
   .status {
-    min-height: 16px;
-    margin: 10px 0 0;
-    font-size: 12.5px;
-    color: #8fd19e;
+    min-height: 18px;
+    font-size: 12px;
+    color: #9ee7b0;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
   }
   .status.error {
-    color: #ff9b9b;
+    color: #ffd5cc;
+  }
+  .status svg {
+    width: 12px;
+    height: 12px;
+    display: block;
   }
   .hint {
-    margin: 4px 0 0;
-    font-size: 11px;
-    line-height: 1.4;
-    color: #6f6f7c;
+    margin: 10px 0 0;
+    font-size: 11.5px;
+    line-height: 1.38;
+    color: var(--text-dim);
+  }
+  a {
+    color: #ffdacc;
+  }
+  [hidden] {
+    display: none !important;
   }
 </style>
 </head>
 <body>
   <div class="wrap">
-    <h1><span class="dot"></span>OpenBrainAI</h1>
-    <p class="sub">Paste your Anthropic API key to enable the assistant on every page.</p>
+    <h1>
+      <svg class="mark" viewBox="0 0 24 24" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+        <path d="M7.5 8.5l4.5 3.5 4.5-3.5" stroke="#edf3ff" stroke-width="1.55" stroke-linecap="round"/>
+        <path d="M6.5 16l5.5-4 5.5 4" stroke="#edf3ff" stroke-width="1.55" stroke-linecap="round"/>
+        <circle cx="7" cy="8" r="2" stroke="#edf3ff" stroke-width="1.55"/>
+        <circle cx="17" cy="8" r="2" stroke="#edf3ff" stroke-width="1.55"/>
+        <circle cx="12" cy="12" r="2" stroke="#edf3ff" stroke-width="1.55"/>
+        <circle cx="6.5" cy="16" r="1.8" stroke="#edf3ff" stroke-width="1.55"/>
+        <circle cx="17.5" cy="16" r="1.8" stroke="#edf3ff" stroke-width="1.55"/>
+        <circle cx="12" cy="12" r="1" fill="#ff8f6b"/>
+      </svg>
+      OpenBrainAI
+    </h1>
+    <p class="sub">Add your API key so OpenBrainAI can send your screenshot + prompt to Claude and return an answer.</p>
 
-    <label for="apiKey">Anthropic API key</label>
-    <input id="apiKey" type="password" placeholder="sk-ant-..." autocomplete="off" spellcheck="false" />
-    <button id="saveBtn" type="button">Save</button>
-    <p id="status" class="status" aria-live="polite"></p>
-    <p class="hint">Stored locally in this browser (chrome.storage.local) and sent only to api.anthropic.com.</p>
+    <div class="card">
+      <div id="emptyState">
+        <label for="apiKey" class="label">Anthropic API key</label>
+        <input id="apiKey" type="password" placeholder="sk-ant-..." autocomplete="off" spellcheck="false" />
+        <div class="button-row">
+          <button id="saveBtn" class="save-btn" type="button">Save key</button>
+          <span id="status" class="status" aria-live="polite"></span>
+        </div>
+        <p class="hint">Get a key from the <a href="https://console.anthropic.com" target="_blank" rel="noopener noreferrer">Anthropic Console</a>. Stored locally in <code>chrome.storage.local</code>.</p>
+      </div>
+
+      <div id="savedState" hidden>
+        <span class="label">Saved key</span>
+        <span id="maskedKey" class="saved-key"></span>
+        <div class="button-row">
+          <button id="changeBtn" type="button" class="change-btn">Change</button>
+          <span id="savedStatus" class="status" aria-live="polite"></span>
+        </div>
+      </div>
+    </div>
   </div>
   <script src="popup.js"></script>
 </body>
